@@ -14,9 +14,8 @@ def save_items(filepath, data):
 def load_data(filepath):
     try:
         with open(filepath, "r") as f:
-            data = json.load(f)
-            return data
-    except:
+            return json.load(f)
+    except Exception:
         return {}
 
 
@@ -24,11 +23,8 @@ if len(sys.argv) == 2:
     command = sys.argv[1]
     data = load_data(SAVED_DATA)
 
-    if command == "save":
-        key = input("Enter a key: ")
-        data[key] = clipboard.paste()
-        save_items(SAVED_DATA, data)
-        print("Data saved!")
+    if command == "list":
+        print(data)
 
     elif command == "load":
         key = input("Enter a key: ")
@@ -38,8 +34,11 @@ if len(sys.argv) == 2:
         else:
             print("Key does not exist.")
 
-    elif command == "list":
-        print(data)
+    elif command == "save":
+        key = input("Enter a key: ")
+        data[key] = clipboard.paste()
+        save_items(SAVED_DATA, data)
+        print("Data saved!")
 
     else:
         print("Unknown command")
